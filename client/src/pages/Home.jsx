@@ -6,40 +6,32 @@ import { ToastContainer, toast } from "react-toastify";
 
 const Home = () => {
   const navigate = useNavigate();
-  const [cookies, setCookie, removeCookie] = useCookies([]); // Added setCookie
-
+  const [cookies, removeCookie] = useCookies([]);
   const [username, setUsername] = useState("");
-
   useEffect(() => {
     const verifyCookie = async () => {
       if (!cookies.token) {
         navigate("/login");
-        return;
       }
-
       const { data } = await axios.post(
         "https://jwt-auth-server-fxi9.onrender.com",
         {},
         { withCredentials: true }
       );
-
       const { status, user } = data;
       setUsername(user);
-
-      if (!status) {
-        navigate("/login");
-      }
+      return status
+        ? toast(`Hello ${user}`, {
+            position: "top-right",
+          })
+        : (removeCookie("token"), navigate("/login"));
     };
-
     verifyCookie();
-  }, [cookies, navigate]);
-
+  }, [cookies, navigate, removeCookie]);
   const Logout = () => {
-    // Remove the token cookie only when the user wants to log out
     removeCookie("token");
     navigate("/signup");
   };
-
   return (
     <>
       <div className="home_page">
