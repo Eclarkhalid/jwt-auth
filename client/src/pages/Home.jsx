@@ -6,7 +6,8 @@ import { ToastContainer, toast } from "react-toastify";
 
 const Home = () => {
   const navigate = useNavigate();
-  const [cookies, removeCookie] = useCookies([]);
+  const [cookies, setCookie, removeCookie] = useCookies([]); // Added setCookie
+
   const [username, setUsername] = useState("");
 
   useEffect(() => {
@@ -26,15 +27,15 @@ const Home = () => {
       setUsername(user);
 
       if (!status) {
-        removeCookie("token");
         navigate("/login");
       }
     };
 
     verifyCookie();
-  }, [cookies, navigate, removeCookie]);
+  }, [cookies, navigate]);
 
   const Logout = () => {
+    // Remove the token cookie only when the user wants to log out
     removeCookie("token");
     navigate("/signup");
   };
