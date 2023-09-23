@@ -22,7 +22,7 @@ app.listen(PORT, () => {
 
 app.use(
   cors({
-    origin: ["https://jwt-auth-orcin-omega.vercel.app/"],
+    origin: ["https://jwt-auth-orcin-omega.vercel.app"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
