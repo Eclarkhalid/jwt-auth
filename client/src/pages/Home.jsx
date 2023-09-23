@@ -14,7 +14,7 @@ const Home = () => {
         navigate("/login");
       }
       const { data } = await axios.post(
-        "http://localhost:4000",
+        "https://jwt-auth-server-fxi9.onrender.com",
         {},
         { withCredentials: true }
       );
@@ -22,8 +22,8 @@ const Home = () => {
       setUsername(user);
       return status
         ? toast(`Hello ${user}`, {
-            position: "top-right",
-          })
+          position: "top-right",
+        })
         : (removeCookie("token"), navigate("/login"));
     };
     verifyCookie();
